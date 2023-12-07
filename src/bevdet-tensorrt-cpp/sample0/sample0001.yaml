@@ -1,0 +1,34 @@
+cams:
+    CAM_FRONT:
+        cam_intrinsic:
+        -   [268.777, 0.0, 323.450]
+        -   [0.0, 268.527, 190.547]
+        -   [0.0, 0.0, 1.0]
+        data_path: 
+            ./data/nuscenes/samples/CAM_FRONT/n015-2018-08-02-17-16-37+0800__CAM_FRONT__1533201470412460.jpg
+        ego2global_rotation: [1, 0, 0, 0]
+        ego2global_translation: [0, 0, 0.0]
+        sample_data_token: b8fba7d78cf547b996c431dec1f5ee26
+        sensor2ego_rotation: [1, 0, 0, 0]
+        sensor2ego_translation: [0, 0, 0]
+        sensor2lidar_rotation:
+        -   [ 0.29165701, -0.83368124, -0.46894753]
+        -   [-0.93154107, -0.13624662, -0.33714697]
+        -   [ 0.21718058,  0.53517517, -0.81634559]
+        sensor2lidar_translation: [-0.0819863, 0.125706, -0.0119072]
+        timestamp: 1533201470412460
+        type: CAM_FRONT
+
+ego2global_rotation: [1, 0, 0, 0]
+ego2global_translation: [0, 0, 0.0]
+
+lidar2ego_rotation: [1, 0, 0, 0]
+lidar2ego_translation: [0, 0, 0.0]
+lidar_path: 
+    ./data/nuscenes/samples/LIDAR_TOP/n015-2018-08-02-17-16-37+0800__LIDAR_TOP__1533201470448696.pcd.bin
+
+scene_token: e7ef871f77f44331aefdebc24ec034b7
+sweeps: []
+timestamp: 1533201470448696
+token: fd8420396768425eabec9bdddf7e64b6
+
