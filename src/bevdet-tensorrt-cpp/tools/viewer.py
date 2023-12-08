@@ -90,24 +90,25 @@ parser.add_argument("--config", type=str, default="/home/orin_uestc_1/bevdet_ws/
 args = parser.parse_args()
 
 def main():
-    with open(args.config) as f:
-        config = yaml.load(f, Loader=yaml.FullLoader)
-    result, data = dataloader(config['InputFile'], config['OutputLidarBox'], config['LoadDim'])
-    print(data.shape)
+    while 1:
+        with open(args.config) as f:
+            config = yaml.load(f, Loader=yaml.FullLoader)
+        result, data = dataloader(config['InputFile'], config['OutputLidarBox'], config['LoadDim'])
+        print(data.shape)
 
-    # init visualizer
-    vis = Visualizer(None)
-    gt_bboxes = None
-    # show the results
-    show_result_meshlab(
-        vis, 
-        data,
-        result,
-        out_dir=None,
-        gt_bboxes=gt_bboxes, 
-        score_thr=args.score_thr,
-        snapshot=False)
-    vis.show()
+        # init visualizer
+        vis = Visualizer(None)
+        gt_bboxes = None
+        # show the results
+        show_result_meshlab(
+            vis, 
+            data,
+            result,
+            out_dir=None,
+            gt_bboxes=gt_bboxes, 
+            score_thr=args.score_thr,
+            snapshot=False)
+        vis.show()
 
 
 if __name__ == "__main__":

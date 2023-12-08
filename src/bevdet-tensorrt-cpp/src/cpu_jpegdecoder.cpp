@@ -73,8 +73,8 @@ int decode_cpu(const std::vector<std::vector<char>> &files_data, uchar* out_imgs
     //     convert_RGBHWC_to_BGRCHW(temp_gpu, out_imgs + i * width * height * 3, 3, height, width);
     //     CHECK_CUDA(cudaDeviceSynchronize());
     // }
-    CHECK_CUDA(cudaMemcpy(temp_gpu, zed_image.data, width * height * 3, cudaMemcpyHostToDevice));
-    convert_RGBHWC_to_BGRCHW(temp_gpu, out_imgs, 3, height, width);             //多 image 需要留意 out_imgs 的偏移量
+    CHECK_CUDA(cudaMemcpy(out_imgs, zed_image.data, width * height * 3, cudaMemcpyHostToDevice));
+    // convert_RGBHWC_to_BGRCHW(temp_gpu, out_imgs, 3, height, width);             //多 image 需要留意 out_imgs 的偏移量
     CHECK_CUDA(cudaDeviceSynchronize());
     CHECK_CUDA(cudaFree(temp_gpu));
     delete[] temp;

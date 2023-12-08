@@ -179,19 +179,19 @@ void TestSample(YAML::Node &config){
     sampleData.imgs_dev = imgs_dev;
 
     std::vector<Box> ego_boxes;
-    ego_boxes.clear();
+    // ego_boxes.clear();
     float time = 0.f;
     bevdet.DoInfer(sampleData, ego_boxes, time);
     std::vector<Box> lidar_boxes;
     Egobox2Lidarbox(ego_boxes, lidar_boxes, sampleData.param.lidar2ego_rot, 
                                             sampleData.param.lidar2ego_trans);
     Boxes2Txt(lidar_boxes, output_lidarbox, false);
-    ego_boxes.clear();
+    // ego_boxes.clear();
     // bevdet.DoInfer(sampleData, ego_boxes, time); // only for inference time
     
 
 }
-
+// #include <string>
 cv::Mat zed_image;
 YAML::Node config;
 void imageCb(const sensor_msgs::ImageConstPtr& msg)
@@ -210,6 +210,9 @@ void imageCb(const sensor_msgs::ImageConstPtr& msg)
     cv_ptr->image.copyTo(zed_image);
 
     cv::imshow("zed_image", zed_image);
+    // static int i = 0;
+    // cv::imwrite("/home/orin_uestc_1/bevdet_ws/src/" + std::to_string(i) + ".jpg", zed_image);
+    // i++;
     cv::waitKey(1);
     // int height = zed_image.rows;
     // int width = zed_image.cols;

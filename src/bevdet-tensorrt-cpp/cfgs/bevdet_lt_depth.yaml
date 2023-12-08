@@ -8,13 +8,13 @@ sampling: nearest # nearest # or bicubic
 data_config:
     Ncams: 1
     cams: [CAM_FRONT_LEFT, CAM_FRONT, CAM_FRONT_RIGHT, CAM_BACK_LEFT, CAM_BACK, CAM_BACK_RIGHT]
-    crop: [140, 0]
+    crop: [140, 0]                # why crop [140, 0]
     flip: true
-    input_size: [256, 704]
-    resize: [-0.06, 0.11]
+    input_size: [256, 704]        # model input
+    resize: [-0.06, 0.11]         # no use
     resize_test: 0.0
-    rot: [-5.4, 5.4]
-    src_size: [360, 640]
+    rot: [-5.4, 5.4]              # why
+    src_size: [360, 640]          # zed image
 grid_config:
     depth: [1.0, 60.0, 0.5]
     x: [-51.2, 51.2, 0.8]
