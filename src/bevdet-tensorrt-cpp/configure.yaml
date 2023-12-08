@@ -19,7 +19,7 @@ sample:
     CAM_FRONT: ./src/bevdet/src/bevdet-tensorrt-cpp/sample0/imgs/CAM_FRONT.jpg
 
 CamConfig: ./src/bevdet/src/bevdet-tensorrt-cpp/sample0/sample0001.yaml
-InputFile: ./src/bevdet/src/bevdet-tensorrt-cpp/sample0/0.bin
+InputFile: ./src/bevdet/src/bevdet-tensorrt-cpp/sample0/0.pcd
 OutputLidarBox: ./src/bevdet/src/bevdet-tensorrt-cpp/sample0/sample0_lidarbox.txt
 
 ImgStageEngine: ./src/bevdet/src/bevdet-tensorrt-cpp/model/img_stage_lt_d_fp16.engine

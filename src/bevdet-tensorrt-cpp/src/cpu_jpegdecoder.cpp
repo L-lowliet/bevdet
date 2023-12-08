@@ -64,15 +64,18 @@ int decode_cpu(const std::vector<std::vector<char>> &files_data, uchar* out_imgs
     uchar* temp = new uchar[width * height * 3];
     uchar* temp_gpu = nullptr;
     CHECK_CUDA(cudaMalloc(&temp_gpu, width * height * 3));
-    for (size_t i = 0; i < files_data.size(); i++) {
-        if (decode_jpeg(files_data[i], temp)) {
-            return EXIT_FAILURE;
-        }
-        CHECK_CUDA(cudaMemcpy(temp_gpu, zed_image.data, width * height * 3, cudaMemcpyHostToDevice));
-        // CHECK_CUDA(cudaMemcpy(temp_gpu, temp, width * height * 3, cudaMemcpyHostToDevice));
-        convert_RGBHWC_to_BGRCHW(temp_gpu, out_imgs + i * width * height * 3, 3, height, width);
-        CHECK_CUDA(cudaDeviceSynchronize());
-    }
+    // for (size_t i = 0; i < files_data.size(); i++) {
+    //     if (decode_jpeg(files_data[i], temp)) {
+    //         return EXIT_FAILURE;
+    //     }
+    //     CHECK_CUDA(cudaMemcpy(temp_gpu, zed_image.data, width * height * 3, cudaMemcpyHostToDevice));
+    //     // CHECK_CUDA(cudaMemcpy(temp_gpu, temp, width * height * 3, cudaMemcpyHostToDevice));
+    //     convert_RGBHWC_to_BGRCHW(temp_gpu, out_imgs + i * width * height * 3, 3, height, width);
+    //     CHECK_CUDA(cudaDeviceSynchronize());
+    // }
+    CHECK_CUDA(cudaMemcpy(temp_gpu, zed_image.data, width * height * 3, cudaMemcpyHostToDevice));
+    convert_RGBHWC_to_BGRCHW(temp_gpu, out_imgs, 3, height, width);             //多 image 需要留意 out_imgs 的偏移量
+    CHECK_CUDA(cudaDeviceSynchronize());
     CHECK_CUDA(cudaFree(temp_gpu));
     delete[] temp;
     return EXIT_SUCCESS;

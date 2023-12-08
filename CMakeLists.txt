@@ -98,6 +98,10 @@ link_directories(
 	${TENSORRT_LIBRARY_DIRS}
 )
 
+
+catkin_package(
+)
+
 cuda_add_executable(bevdemo 
     src/bevdet-tensorrt-cpp/demo_bevdet.cpp 
     src/bevdet-tensorrt-cpp/src/bevdet.cpp 
@@ -129,3 +133,41 @@ target_link_libraries(bevdemo
     libjpeg.so
     ${OpenCV_LIBRARIES} ${OpenCV_LIBS} ${catkin_LIBRARIES}
 )
+
+
+
+
+
+
+
+
+# cuda_add_library(bevdemo_lib 
+#     # src/bevdet-tensorrt-cpp/demo_bevdet.cpp 
+#     src/bevdet-tensorrt-cpp/src/bevdet.cpp 
+#     src/bevdet-tensorrt-cpp/src/preprocess.cu 
+#     src/bevdet-tensorrt-cpp/src/bevpool.cu 
+#     src/bevdet-tensorrt-cpp/src/iou3d_nms.cu
+#     src/bevdet-tensorrt-cpp/src/postprocess.cu
+#     src/bevdet-tensorrt-cpp/src/data.cpp
+#     src/bevdet-tensorrt-cpp/src/grid_sampler.cu
+#     src/bevdet-tensorrt-cpp/src/cpu_jpegdecoder.cpp
+#     src/bevdet-tensorrt-cpp/src/nvjpegdecoder.cpp
+# )
+# target_link_libraries(bevdemo_lib 
+#     yaml-cpp 
+#     libnvinfer.so
+#     libjpeg.so
+#     ${OpenCV_LIBRARIES} ${OpenCV_LIBS} ${catkin_LIBRARIES}
+# )
+# # find_package(JPEG REQUIRED)
+
+# # if(JPEG_FOUND)
+# #   message("JPEG library found   " ${JPEG_INCLUDE_DIR} " "  ${JPEG_LIBRARIES})
+# #   include_directories("/home/orin_uestc_1/anaconda3/include")
+# #   target_link_libraries(bevdemo "/home/orin_uestc_1/anaconda3/lib/libjpeg.so")
+# # else()
+# #   message(FATAL_ERROR "JPEG library not found")
+# # endif()
+
+# add_executable(bevdemo src/bevdet-tensorrt-cpp/demo_bevdet.cpp)
+# target_link_libraries(bevdemo bevdemo_lib)

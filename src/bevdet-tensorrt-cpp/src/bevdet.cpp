@@ -676,7 +676,7 @@ int BEVDet::DoInfer(const camsData& cam_data, std::vector<Box> &out_detections, 
     cost_time = sum_time.count() * 1000;
     printf("[Infer total  ] cost time: %5.3lf ms\n", cost_time);
 
-    printf("Detect %ld objects\n", out_detections.size());
+    printf("Detect %ld objects\n\n\n\n\n", out_detections.size());
     return EXIT_SUCCESS;
 }
 

@@ -5,7 +5,7 @@ import numpy as np
 from open3d_vis import Visualizer
 import yaml
 import argparse
-
+import open3d as o3d
 
 # https://www.rapidtables.com/web/color/RGB_Color.html
 PALETTE = [[30, 144, 255],  # dodger blue
@@ -75,14 +75,17 @@ def show_result_meshlab(vis,
 
 
 def dataloader(cloud_path , boxes_path, load_dim):
-    data = np.fromfile(cloud_path, dtype=np.float32, count=-1).reshape([-1, load_dim])
+    point_cloud = o3d.io.read_point_cloud(cloud_path)
+    # 将点云数据转换为 NumPy 数组
+    data = np.asarray(point_cloud.points)
+    # data = np.fromfile(cloud_path, dtype=np.float32, count=-1).reshape([-1, load_dim])
     result = np.loadtxt(boxes_path).reshape(-1, 9)
     return result, data
 
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--score_thr", type=float, default=0.25)
-parser.add_argument("--config", type=str, default="../configure.yaml")
+parser.add_argument("--config", type=str, default="/home/orin_uestc_1/bevdet_ws/src/bevdet/src/bevdet-tensorrt-cpp/configure.yaml")
 
 args = parser.parse_args()
 

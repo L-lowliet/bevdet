@@ -123,7 +123,7 @@ void TestNuscenes(YAML::Node &config){
 }
 
 void TestSample(YAML::Node &config){
-    printf("==3==\n");
+
     size_t img_N = config["N"].as<size_t>();
     int img_w = config["W"].as<int>();
     int img_h = config["H"].as<int>();
@@ -134,7 +134,7 @@ void TestSample(YAML::Node &config){
     std::string output_lidarbox = config["OutputLidarBox"].as<std::string>();
     YAML::Node sample = config["sample"];
     std::string output_dir = config["OutputDir"].as<std::string>();
-    printf("==4==\n");
+
     std::vector<std::string> imgs_file;
     std::vector<std::string> imgs_name;
     for(auto file : sample){
@@ -159,20 +159,21 @@ void TestSample(YAML::Node &config){
                 sampleData.param.cams2ego_rot, sampleData.param.cams2ego_trans, 
                                                     imgstage_file, bevstage_file);
     std::vector<std::vector<char>> imgs_data;
-    read_sample(imgs_file, imgs_data);
+    // read_sample(imgs_file, imgs_data);
 
-    std::cout << "imgs_data = " << imgs_data.size() << std::endl;
-    int count = 0;
-    for (const auto& inner_vec : imgs_data) {
-        for (char c : inner_vec) {
-            count++;
-        }
-        std::cout << "==========count===========" << count;
-        count = 0;
-        std::cout << std::endl; // 在内部向量遍历结束后换行
-    }
+    // std::cout << "imgs_data = " << imgs_data.size() << std::endl;
+    // int count = 0;
+    // for (const auto& inner_vec : imgs_data) {
+    //     for (char c : inner_vec) {
+    //         count++;
+    //     }
+    //     std::cout << "==========count===========" << count;
+    //     count = 0;
+    //     std::cout << std::endl; // 在内部向量遍历结束后换行
+    // }
+    // std::cout << "size2 = " << img_N * 3 * img_w * img_h * sizeof(uchar) << std::endl;
+
     uchar* imgs_dev = nullptr;
-    std::cout << "size2 = " << img_N * 3 * img_w * img_h * sizeof(uchar) << std::endl;
     CHECK_CUDA(cudaMalloc((void**)&imgs_dev, img_N * 3 * img_w * img_h * sizeof(uchar)));
     decode_cpu(imgs_data, imgs_dev, img_w, img_h);
     sampleData.imgs_dev = imgs_dev;
@@ -210,14 +211,16 @@ void imageCb(const sensor_msgs::ImageConstPtr& msg)
 
     cv::imshow("zed_image", zed_image);
     cv::waitKey(1);
-
-    printf("==2==\n");
+    // int height = zed_image.rows;
+    // int width = zed_image.cols;
+    // int channels = zed_image.channels();
+    // std::cout << "Height: " << height << ", Width: " << width << ", Channels: " << channels << std::endl;
     TestSample(config);
   }
 
 
 int main(int argc, char **argv){
-    Getinfo();
+    // Getinfo();
     // if(argc < 2){
     //     printf("Need a configure yaml! Exit!\n");
     //     return 0;
