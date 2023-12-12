@@ -3,8 +3,8 @@ TestNuscenes: false # true or false
 ModelConfig: ./src/bevdet/src/bevdet-tensorrt-cpp/cfgs/bevdet_lt_depth.yaml
 
 N: 1
-H: 360
-W: 640
+H: 900
+W: 1600
 # cams: [CAM_FRONT_LEFT, CAM_FRONT, CAM_FRONT_RIGHT, CAM_BACK_LEFT, CAM_BACK, CAM_BACK_RIGHT]
 # sample:
 #     CAM_FRONT_LEFT: ../sample0/imgs/CAM_FRONT_LEFT.jpg

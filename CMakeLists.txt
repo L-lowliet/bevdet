@@ -70,7 +70,10 @@ find_package(catkin REQUIRED COMPONENTS
   sensor_msgs
   std_msgs
   geometry_msgs
+  message_generation  # 确保包含消息生成的依赖
 )
+
+
 
 find_package(OpenCV REQUIRED)
 
@@ -100,6 +103,7 @@ link_directories(
 
 
 catkin_package(
+  CATKIN_DEPENDS roscpp message_runtime
 )
 
 cuda_add_executable(bevdemo 

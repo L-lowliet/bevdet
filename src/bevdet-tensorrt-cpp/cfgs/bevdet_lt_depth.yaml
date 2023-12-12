@@ -14,7 +14,7 @@ data_config:
     resize: [-0.06, 0.11]         # no use
     resize_test: 0.0
     rot: [-5.4, 5.4]              # why
-    src_size: [360, 640]          # zed image
+    src_size: [900, 1600]          # zed image
 grid_config:
     depth: [1.0, 60.0, 0.5]
     x: [-51.2, 51.2, 0.8]

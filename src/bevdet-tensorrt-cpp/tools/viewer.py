@@ -84,7 +84,7 @@ def dataloader(cloud_path , boxes_path, load_dim):
 
 
 parser = argparse.ArgumentParser()
-parser.add_argument("--score_thr", type=float, default=0.25)
+parser.add_argument("--score_thr", type=float, default=0.2)
 parser.add_argument("--config", type=str, default="/home/orin_uestc_1/bevdet_ws/src/bevdet/src/bevdet-tensorrt-cpp/configure.yaml")
 
 args = parser.parse_args()

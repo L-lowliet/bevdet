@@ -1,23 +1,45 @@
 cams:
     CAM_FRONT:
         cam_intrinsic:
-        -   [268.777, 0.0, 323.450]
-        -   [0.0, 268.527, 190.547]
+        # -   [262.8255920410156, 0.0, 323.5713806152344]
+        # -   [0.0, 262.8255920410156, 191.6680145263672]
+        # -   [0.0, 0.0, 1.0]
+        -   [657.064, 0.0, 808.928]
+        -   [0.0, 657.064, 479.170]
         -   [0.0, 0.0, 1.0]
         data_path: 
             ./data/nuscenes/samples/CAM_FRONT/n015-2018-08-02-17-16-37+0800__CAM_FRONT__1533201470412460.jpg
         ego2global_rotation: [1, 0, 0, 0]
         ego2global_translation: [0, 0, 0.0]
         sample_data_token: b8fba7d78cf547b996c431dec1f5ee26
-        sensor2ego_rotation: [1, 0, 0, 0]
-        sensor2ego_translation: [0, 0, 0]
+        sensor2ego_rotation: [0.12280980120078765, -0.132400842670559, -0.7004305821388234, 0.690496031265798] #[ 0.90098862, -0.35513434,  0.1244252,  -0.2159108]
+        sensor2ego_translation: [0.108612, -0.0549013, -0.0302937]
         sensor2lidar_rotation:
-        -   [ 0.29165701, -0.83368124, -0.46894753]
-        -   [-0.93154107, -0.13624662, -0.33714697]
-        -   [ 0.21718058,  0.53517517, -0.81634559]
-        sensor2lidar_translation: [-0.0819863, 0.125706, -0.0119072]
+        -   [ 0.71679594, -0.58621451,  0.37756606]
+        -   [-0.69367348, -0.65452426,  0.30069101]
+        -   [ 0.07085671, -0.47744167, -0.87580179]
+        sensor2lidar_translation: [0.108612, -0.0549013, -0.0302937]
         timestamp: 1533201470412460
         type: CAM_FRONT
+    # CAM_FRONT:
+    #     cam_intrinsic:
+    #     -   [268.777, 0.0, 323.450]
+    #     -   [0.0, 268.527, 190.547]
+    #     -   [0.0, 0.0, 1.0]
+    #     data_path: 
+    #         ./data/nuscenes/samples/CAM_FRONT/n015-2018-08-02-17-16-37+0800__CAM_FRONT__1533201470412460.jpg
+    #     ego2global_rotation: [1, 0, 0, 0]
+    #     ego2global_translation: [0, 0, 0.0]
+    #     sample_data_token: b8fba7d78cf547b996c431dec1f5ee26
+    #     sensor2ego_rotation: [1.0, -0.0, 0.0, -0.0]
+    #     sensor2ego_translation: [0.0, 0.0, 0.0]
+    #     sensor2lidar_rotation:
+    #     -   [ 0.29165701, -0.83368124, -0.46894753]
+    #     -   [-0.93154107, -0.13624662, -0.33714697]
+    #     -   [ 0.21718058,  0.53517517, -0.81634559]
+    #     sensor2lidar_translation: [-0.0819863, 0.125706, -0.0119072]
+    #     timestamp: 1533201470412460
+    #     type: CAM_FRONT
 
 ego2global_rotation: [1, 0, 0, 0]
 ego2global_translation: [0, 0, 0.0]
