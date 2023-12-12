@@ -11,6 +11,7 @@
 #include "cpu_jpegdecoder.h"
 #include <visualization_msgs/Marker.h>
 #include <ros/ros.h>
+#include <visualization_msgs/MarkerArray.h>
 #include <image_transport/image_transport.h>
 #include <cv_bridge/cv_bridge.h>
 #include <sensor_msgs/image_encodings.h>
@@ -27,6 +28,8 @@ using std::chrono::high_resolution_clock;
 cv::Mat zed_image;
 YAML::Node config;
 visualization_msgs::Marker marker; // 创建立体矩形框消息对象
+visualization_msgs::MarkerArray marker_array; // 创建一个MarkerArray对象
+visualization_msgs::MarkerArray empty_marker_array;
 ros::Publisher pub;
 
 void Getinfo(void) {
@@ -189,6 +192,7 @@ void TestSample(YAML::Node &config){
     float time = 0.f;
     bevdet.DoInfer(sampleData, ego_boxes, time);
     std::vector<Box> lidar_boxes;
+    lidar_boxes.clear();
     Egobox2Lidarbox(ego_boxes, lidar_boxes, sampleData.param.lidar2ego_rot, 
                                             sampleData.param.lidar2ego_trans);
     Boxes2Txt(lidar_boxes, output_lidarbox, false);
@@ -197,41 +201,52 @@ void TestSample(YAML::Node &config){
     // marker 
     if(lidar_boxes.empty()){
       printf("lidarbox = 0  \n");
+
     }else{
-      if(lidar_boxes[0].score > 0.3 ){ //&& lidar_boxes[0].label == 8
-        marker.header.frame_id = "rslidar"; // 设置Marker的坐标系
+      for (size_t i = 0; i < lidar_boxes.size(); ++i) {
+        if(lidar_boxes[i].score > 0.3 && lidar_boxes[i].label == 8){
+          marker.header.frame_id = "rslidar"; // 设置Marker的坐标系
 
-        marker.header.stamp = ros::Time::now();
-        marker.ns = "basic_shapes";
-        marker.id = 0;
+          marker.header.stamp = ros::Time::now();
+          marker.ns = "basic_shapes";
+          marker.id = i;
+          marker.lifetime = ros::Duration(0.5);
+          marker.type = visualization_msgs::Marker::CUBE; // 设置Marker类型为立方体
+          marker.action = visualization_msgs::Marker::ADD;
 
-        marker.type = visualization_msgs::Marker::CUBE; // 设置Marker类型为立方体
-        marker.action = visualization_msgs::Marker::ADD;
+          // 设置长方体的尺寸
+          marker.scale.x = lidar_boxes[i].l; // 长
+          marker.scale.y = lidar_boxes[i].w; // 宽
+          marker.scale.z = lidar_boxes[i].h; // 高
 
-        // 设置长方体的尺寸
-        marker.scale.x = lidar_boxes[0].l; // 长
-        marker.scale.y = lidar_boxes[0].w; // 宽
-        marker.scale.z = lidar_boxes[0].h; // 高
+          // 设置Marker的颜色
+          marker.color.r = 0.0f;
+          marker.color.g = 1.0f;
+          marker.color.b = 0.0f;
+          marker.color.a = 0.5; // 半透明
 
-        // 设置Marker的颜色
-        marker.color.r = 0.0f;
-        marker.color.g = 1.0f;
-        marker.color.b = 0.0f;
-        marker.color.a = 0.5; // 半透明
+          marker.pose.position.x = lidar_boxes[i].x / 2.5; // 设置长方体的位置
+          marker.pose.position.y = lidar_boxes[i].y / 2.5;
+          marker.pose.position.z = 0.5 + lidar_boxes[i].z / 2.5;
 
-        marker.pose.position.x = lidar_boxes[0].x / 2.5; // 设置长方体的位置
-        marker.pose.position.y = lidar_boxes[0].y / 2.5;
-        marker.pose.position.z = 0.5 + lidar_boxes[0].z / 2.5;
+          marker.pose.orientation.x = 0.0;
+          marker.pose.orientation.y = 0.0;
+          marker.pose.orientation.z = 0.0;
+          marker.pose.orientation.w = 1.0;
+          
+          marker_array.markers.push_back(marker); // 将标记添加到MarkerArray中
 
-        marker.pose.orientation.x = 0.0;
-        marker.pose.orientation.y = 0.0;
-        marker.pose.orientation.z = 0.0;
-        marker.pose.orientation.w = 1.0;
-        
-        pub.publish(marker); // 发布消息到话题上
+        }else{
+          // pub.publish(empty_marker_array); // 发布消息到话题上
+        }
       }
+
     }
-      
+    pub.publish(marker_array); // 发布消息到话题上
+    marker_array.markers.clear();
+    ego_boxes.clear();
+    lidar_boxes.clear();
+ 
 
 }
 
@@ -284,8 +299,8 @@ int main(int argc, char **argv){
     ros::NodeHandle nh;
     image_transport::Subscriber image_sub_;
     image_transport::ImageTransport it(nh);
-    pub = nh.advertise<visualization_msgs::Marker>("cuboid_topic", 10); // 定义发布器
-    ros::Rate loop_rate(10); // 发布频率为10Hz
+    pub = nh.advertise<visualization_msgs::MarkerArray>("markerarray_topic", 10); // 定义发布器
+    ros::Rate loop_rate(20); // 发布频率为10Hz
     // 创建订阅器，订阅图像消息
     image_sub_ = it.subscribe("/zed2i/zed_node/rgb/image_rect_color", 1, &imageCb);
     // 进入 ROS 循环
